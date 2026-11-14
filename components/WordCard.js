@@ -17,6 +17,9 @@ function WordCard({ wordInfo, setNext }) {
         style={styles.wordContainer}
         onPress={() => setShowFullInfo(true)}
       >
+        {showFullInfo && wordInfo.image && (
+          <Image style={styles.image} source={{ uri: wordInfo.image }} />
+        )}
         <Text style={styles.word}>{wordInfo.word}</Text>
         {showFullInfo && (
           <>
@@ -85,7 +88,7 @@ function getStyles(colors) {
       borderWidth: 1,
       borderRadius: 4,
       alignItems: "center",
-      paddingVertical: 140,
+      paddingVertical: 30,
       justifyContent: "space-evenly",
     },
     word: {
@@ -105,7 +108,7 @@ function getStyles(colors) {
     meaning: {
       fontSize: 18,
       color: colors.fontMain,
-      padding: 5
+      padding: 5,
     },
     remember: {
       flex: 1,
@@ -126,7 +129,7 @@ function getStyles(colors) {
     image: {
       width: 150,
       aspectRatio: 1,
-      // marginBottom: 30,
+      borderRadius: 8,
     },
   });
 }

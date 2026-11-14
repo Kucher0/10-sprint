@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  Image,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, TextInput, Text, Pressable } from "react-native";
 import { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { wordsLearningActions } from "../../store/wordsLearningSlice";
@@ -13,6 +6,7 @@ import { wordsLearningActions } from "../../store/wordsLearningSlice";
 import { getWordInfo } from "../../services/wordsHandler";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { playSound } from "../../services/soundHandler";
+import WordImagePicker from "../../components/WordImagePicker";
 
 function AddWord({ navigation }) {
   const [text, setText] = useState();
@@ -43,6 +37,10 @@ function AddWord({ navigation }) {
     });
   }, [navigation, wordData]);
 
+  function onPickImage(uri) {
+    setWordData((prevData) => ({ ...prevData, image: uri }));
+  }
+
   function onAdd() {
     dispatch(wordsLearningActions.addWord(wordData));
     navigation.navigate("AllWords");
@@ -60,6 +58,11 @@ function AddWord({ navigation }) {
           placeholderTextColor={colors.grey600}
         />
       </View>
+      <WordImagePicker
+        image={wordData?.image}
+        enabled={!!wordData?.word}
+        onPick={onPickImage}
+      />
       {wordData && (
         <View style={styles.receivedInfoContainer}>
           <View style={{ flexDirection: "row", alignItems: "baseline" }}>

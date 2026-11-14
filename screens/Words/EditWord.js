@@ -1,15 +1,10 @@
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, TextInput, Text, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { playSound } from "../../services/soundHandler";
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { wordsLearningActions } from "../../store/wordsLearningSlice";
+import WordImagePicker from "../../components/WordImagePicker";
 
 function EditWord({ route, navigation }) {
   const [wordData, setWordData] = useState(() => route.params.wordData);
@@ -19,9 +14,7 @@ function EditWord({ route, navigation }) {
 
   function onSave() {
     dispatch(wordsLearningActions.updateWord(wordData));
-    navigation.navigate(
-      "AllWords"
-    );
+    navigation.navigate("AllWords");
   }
 
   function onChangeWordData(text, propName) {
@@ -72,6 +65,11 @@ function EditWord({ route, navigation }) {
           onChangeText={(text) => onChangeWordData(text, "meaning")}
           value={wordData.meaning}
           textAlignVertical={"top"}
+        />
+        <WordImagePicker
+          image={wordData.image}
+          enabled={!!wordData.word}
+          onPick={(uri) => onChangeWordData(uri, "image")}
         />
         {wordData.word && (
           <Pressable style={styles.buttonContainer} onPress={onSave}>

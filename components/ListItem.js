@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Pressable,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, Pressable, Image } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useMemo } from "react";
@@ -22,6 +15,14 @@ function Item({ item }) {
 
   return (
     <View style={styles.item}>
+      <Image
+        style={styles.image}
+        source={
+          item.image
+            ? { uri: item.image }
+            : require("../assets/no-image.png")
+        }
+      />
       <Pressable disabled={!item.audio} onPress={() => playSound(item.audio)}>
         <View style={styles.iconContainer}>
           <Ionicons
@@ -71,6 +72,7 @@ function getStyles(colors) {
       marginHorizontal: 5,
       alignItems: "center",
       paddingHorizontal: 5,
+      paddingVertical: 5,
       borderRadius: 8,
       elevation: 4,
     },
@@ -96,6 +98,8 @@ function getStyles(colors) {
     image: {
       width: 60,
       aspectRatio: 1,
+      borderRadius: 6,
+      marginRight: 4,
     },
   });
 }
